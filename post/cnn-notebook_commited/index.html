@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Image classification using CNN | Home</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="generator" content="Hugo 0.74.3" />
+    
+    
+      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    
+
+    
+    
+      <link href="https://example.com/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
+    
+
+    
+
+    
+      
+<link rel="shortcut icon" href="https://example.com/images/favicon-32x32.png" type="image/x-icon" />
+
+
+    
+
+    
+    
+    <meta property="og:title" content="Image classification using CNN" />
+<meta property="og:description" content="Project 1 : Image Classification" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/post/cnn-notebook_commited/" />
+
+<meta itemprop="name" content="Image classification using CNN">
+<meta itemprop="description" content="Project 1 : Image Classification">
+
+<meta itemprop="wordCount" content="1141">
+
+
+
+<meta itemprop="keywords" content="CNN,Deep Learning,keras,tensorflow," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Image classification using CNN"/>
+<meta name="twitter:description" content="Project 1 : Image Classification"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  
+  
+  <header class="cover bg-top" style="background-image: url('https://example.com/post/cnn-notebook_commited_files/cnn-notebook_commited_13_0.png');">
+    <div class="pb3-m pb6-l bg-black-60">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="https://example.com/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        <img src="https://example.com/images/favicon-32x32.png" class="w100 mw5-ns" alt="Home" />
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+        <ul class="pl0 mr3">
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="https://example.com/about/" title="About page">
+              About
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="https://example.com/contact/" title="Contact page">
+              Contact
+            </a>
+          </li>
+          
+          <li class="list f5 f4-ns fw4 dib pr3">
+            <a class="hover-white no-underline white-90" href="https://example.com/post/" title="Projects page">
+              Projects
+            </a>
+          </li>
+          
+        </ul>
+      
+      
+
+
+
+
+<a href="https://twitter.com/GoHugoIO" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv6 ph3 ph4-ns">
+        
+          <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">Image classification using CNN</h1>
+          
+            <h2 class="fw1 f5 f3-l white-80 measure-wide-l center lh-copy mt3 mb4">
+              Project 1 : Image Classification
+            </h2>
+          
+        
+      </div>
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked">
+          
+        PROJECTS
+      </aside>
+      
+
+
+
+
+  <div id="sharing" class="mt3">
+
+    
+    <a href="https://www.facebook.com/sharer.php?u=https://example.com/post/cnn-notebook_commited/" class="facebook no-underline" aria-label="share on Facebook">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
+
+    </a>
+
+    
+    
+    <a href="https://twitter.com/share?url=https://example.com/post/cnn-notebook_commited/&amp;text=Image%20classification%20using%20CNN" class="twitter no-underline" aria-label="share on Twitter">
+      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+    </a>
+
+    
+    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://example.com/post/cnn-notebook_commited/&amp;title=Image%20classification%20using%20CNN" class="linkedin no-underline" aria-label="share on LinkedIn">
+      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+
+    </a>
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Image classification using CNN</h1>
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="0001-01-01T00:00:00Z">January 1, 0001</time>
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><h1 id="descriptions">Descriptions</h1>
+<p>This is a project that uses Convolutional Neural Nets to classified images between classes of forest, glacier, sea, street and buildings. The libraries that are used are such as tensorflow, keras, matplotlib and numpy. The datasets is open-source and can be found on Kaggle.</p>
+<ul>
+<li>visualize images</li>
+<li>visualize covnets</li>
+<li>model</li>
+<li>deploy to web</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
+<span style="color:#f92672">from</span> tensorflow <span style="color:#f92672">import</span> keras
+<span style="color:#f92672">import</span> cv2
+<span style="color:#f92672">import</span> os
+<span style="color:#f92672">from</span> tensorflow.keras.preprocessing.image <span style="color:#f92672">import</span> ImageDataGenerator
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>listdir(<span style="color:#e6db74">&#34;../input/intel-image-classification/seg_train/seg_train&#34;</span>)
+</code></pre></div><pre><code>['glacier', 'sea', 'forest', 'street', 'mountain', 'buildings']
+</code></pre>
+<h1 id="import-images-using-generator">Import images using generator</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_datagen <span style="color:#f92672">=</span> ImageDataGenerator(rescale <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span><span style="color:#f92672">/</span><span style="color:#ae81ff">255</span>)
+test_datagen <span style="color:#f92672">=</span> ImageDataGenerator(rescale <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span><span style="color:#f92672">/</span><span style="color:#ae81ff">255</span>)
+train_generator <span style="color:#f92672">=</span> train_datagen<span style="color:#f92672">.</span>flow_from_directory(<span style="color:#e6db74">&#39;../input/intel-image-classification/seg_train/seg_train&#39;</span>, target_size <span style="color:#f92672">=</span> (<span style="color:#ae81ff">150</span>,<span style="color:#ae81ff">150</span>), batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>,class_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sparse&#39;</span>)
+test_generator <span style="color:#f92672">=</span> test_datagen<span style="color:#f92672">.</span>flow_from_directory(<span style="color:#e6db74">&#39;../input/intel-image-classification/seg_test/seg_test&#39;</span>, target_size <span style="color:#f92672">=</span> (<span style="color:#ae81ff">150</span>,<span style="color:#ae81ff">150</span>), batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>,class_mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sparse&#39;</span>)
+</code></pre></div><pre><code>Found 14034 images belonging to 6 classes.
+Found 3000 images belonging to 6 classes.
+</code></pre>
+<h1 id="import-images-for-eda-purposes">Import images for EDA purposes</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_images</span>(directory):
+    Images <span style="color:#f92672">=</span> []
+    Labels <span style="color:#f92672">=</span> []  
+    label <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+
+    <span style="color:#66d9ef">for</span> labels <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(directory): <span style="color:#75715e">#Main Directory where each class label is present as folder name.</span>
+        <span style="color:#66d9ef">if</span> labels <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;glacier&#39;</span>: <span style="color:#75715e">#Folder contain Glacier Images get the &#39;2&#39; class label.</span>
+            label <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+        <span style="color:#66d9ef">elif</span> labels <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;sea&#39;</span>:
+            label <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+        <span style="color:#66d9ef">elif</span> labels <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;buildings&#39;</span>:
+            label <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">elif</span> labels <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;forest&#39;</span>:
+            label <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">elif</span> labels <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;street&#39;</span>:
+            label <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+        <span style="color:#66d9ef">elif</span> labels <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;mountain&#39;</span>:
+            label <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
+
+        <span style="color:#66d9ef">for</span> image_file <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(directory<span style="color:#f92672">+</span>labels): <span style="color:#75715e">#Extracting the file name of the image from Class Label folder</span>
+            image <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(directory<span style="color:#f92672">+</span>labels<span style="color:#f92672">+</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;/&#39;</span><span style="color:#f92672">+</span>image_file) <span style="color:#75715e">#Reading the image (OpenCV)</span>
+            image <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>resize(image,(<span style="color:#ae81ff">150</span>,<span style="color:#ae81ff">150</span>)) <span style="color:#75715e">#Resize the image, Some images are different sizes. (Resizing is very Important)</span>
+            Images<span style="color:#f92672">.</span>append(image)
+            Labels<span style="color:#f92672">.</span>append(label)
+
+    <span style="color:#66d9ef">return</span> Images, Labels
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_classlabel</span>(class_code):
+    labels <span style="color:#f92672">=</span> {<span style="color:#ae81ff">2</span>:<span style="color:#e6db74">&#39;glacier&#39;</span>, <span style="color:#ae81ff">4</span>:<span style="color:#e6db74">&#39;sea&#39;</span>, <span style="color:#ae81ff">0</span>:<span style="color:#e6db74">&#39;buildings&#39;</span>, <span style="color:#ae81ff">1</span>:<span style="color:#e6db74">&#39;forest&#39;</span>, <span style="color:#ae81ff">5</span>:<span style="color:#e6db74">&#39;street&#39;</span>, <span style="color:#ae81ff">3</span>:<span style="color:#e6db74">&#39;mountain&#39;</span>}
+
+    <span style="color:#66d9ef">return</span> labels[class_code]
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">images, labels <span style="color:#f92672">=</span> get_images(<span style="color:#e6db74">&#39;../input/intel-image-classification/seg_train/seg_train/&#39;</span>) <span style="color:#75715e">#Extract the training images from the folders.</span>
+
+images <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(images) <span style="color:#75715e">#converting the list of images to numpy array.</span>
+labels <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(labels)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Shape of images : &#39;</span>,images<span style="color:#f92672">.</span>shape)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Shape of labels : &#39;</span>,labels<span style="color:#f92672">.</span>shape)
+</code></pre></div><pre><code>Shape of images :  (14034, 150, 150, 3)
+Shape of labels :  (14034,)
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">images[<span style="color:#ae81ff">0</span>]
+</code></pre></div><pre><code>array([[[159, 142, 123],
+        [158, 141, 122],
+        [157, 140, 121],
+        ...,
+        [171, 155, 143],
+        [172, 156, 144],
+        [172, 156, 144]],
+
+       [[154, 137, 118],
+        [155, 138, 119],
+        [157, 140, 121],
+        ...,
+        [172, 156, 144],
+        [172, 156, 144],
+        [172, 156, 144]],
+
+       [[153, 136, 117],
+        [154, 137, 118],
+        [156, 139, 120],
+        ...,
+        [172, 156, 144],
+        [172, 156, 144],
+        [172, 156, 144]],
+
+       ...,
+
+       [[  4,  15,  13],
+        [  6,  17,  15],
+        [  6,  17,  15],
+        ...,
+        [  4,  14,   8],
+        [ 36,  43,  38],
+        [ 17,  24,  19]],
+
+       [[  4,  15,  13],
+        [  3,  14,  12],
+        [  3,  14,  12],
+        ...,
+        [ 26,  40,  36],
+        [ 26,  37,  34],
+        [ 48,  57,  54]],
+
+       [[  0,   6,   4],
+        [  0,   4,   2],
+        [  0,   9,   7],
+        ...,
+        [  8,  23,  19],
+        [ 19,  30,  27],
+        [ 14,  25,  22]]], dtype=uint8)
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">num_classes <span style="color:#f92672">=</span> len(np<span style="color:#f92672">.</span>unique(labels))
+</code></pre></div><h1 id="visualize-the-images">Visualize the images</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>, figsize <span style="color:#f92672">=</span> (<span style="color:#ae81ff">15</span>,<span style="color:#ae81ff">10</span>))
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>):
+        r <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(len(images)) <span style="color:#75715e"># randomly select 25 images</span>
+        ax[i,j]<span style="color:#f92672">.</span>imshow(images[r])
+        ax[i,j]<span style="color:#f92672">.</span>set_title(get_classlabel(labels[r]))
+        ax[i,j]<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+
+plt<span style="color:#f92672">.</span>savefig(<span style="color:#e6db74">&#39;cnn.png&#39;</span>)
+</code></pre></div><p><img src="https://example.com/post/cnn-notebook_commited_files/cnn-notebook_commited_13_0.png" alt="png"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">_, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+pd<span style="color:#f92672">.</span>Series(labels)<span style="color:#f92672">.</span>map({<span style="color:#ae81ff">2</span>:<span style="color:#e6db74">&#39;glacier&#39;</span>, <span style="color:#ae81ff">4</span>:<span style="color:#e6db74">&#39;sea&#39;</span>, <span style="color:#ae81ff">0</span>:<span style="color:#e6db74">&#39;buildings&#39;</span>, <span style="color:#ae81ff">1</span>:<span style="color:#e6db74">&#39;forest&#39;</span>, <span style="color:#ae81ff">5</span>:<span style="color:#e6db74">&#39;street&#39;</span>, <span style="color:#ae81ff">3</span>:<span style="color:#e6db74">&#39;mountain&#39;</span>})<span style="color:#f92672">.</span>value_counts()<span style="color:#f92672">.</span>sort_index()<span style="color:#f92672">.</span>plot(kind <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;bar&#39;</span>,ax<span style="color:#f92672">=</span>ax)
+</code></pre></div><pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f1b5a7594d0&gt;
+</code></pre>
+<p><img src="https://example.com/post/cnn-notebook_commited_files/cnn-notebook_commited_14_1.png" alt="png"></p>
+<h1 id="model">Model</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">myCallback</span>(keras<span style="color:#f92672">.</span>callbacks<span style="color:#f92672">.</span>Callback):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">on_epoch_end</span>(self, epoch, logs<span style="color:#f92672">=</span>{}):
+        <span style="color:#66d9ef">if</span>(logs<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;acc&#39;</span>)<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0.85</span>):
+          <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Reached 85% accuracy so cancelling training!&#34;</span>)
+          self<span style="color:#f92672">.</span>model<span style="color:#f92672">.</span>stop_training <span style="color:#f92672">=</span> True
+
+callbacks <span style="color:#f92672">=</span> myCallback()
+model <span style="color:#f92672">=</span> keras<span style="color:#f92672">.</span>models<span style="color:#f92672">.</span>Sequential([
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(<span style="color:#ae81ff">64</span>, (<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>), activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>, input_shape<span style="color:#f92672">=</span>(<span style="color:#ae81ff">150</span>,<span style="color:#ae81ff">150</span>,<span style="color:#ae81ff">3</span>)),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>MaxPooling2D(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(<span style="color:#ae81ff">64</span>, (<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>), activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>MaxPooling2D(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(<span style="color:#ae81ff">32</span>, (<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>), activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>MaxPooling2D(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Conv2D(<span style="color:#ae81ff">16</span>, (<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>), activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>MaxPooling2D(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Flatten(),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">128</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;relu&#39;</span>),
+    keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Dense(num_classes, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;softmax&#39;</span>)
+])
+
+model<span style="color:#f92672">.</span>summary()
+</code></pre></div><pre><code>Model: &quot;sequential&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 148, 148, 64)      1792      
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 74, 74, 64)        0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 72, 72, 64)        36928     
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 36, 36, 64)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 34, 34, 32)        18464     
+_________________________________________________________________
+max_pooling2d_2 (MaxPooling2 (None, 17, 17, 32)        0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 15, 15, 16)        4624      
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 7, 7, 16)          0         
+_________________________________________________________________
+flatten (Flatten)            (None, 784)               0         
+_________________________________________________________________
+dense (Dense)                (None, 128)               100480    
+_________________________________________________________________
+dense_1 (Dense)              (None, 6)                 774       
+=================================================================
+Total params: 163,062
+Trainable params: 163,062
+Non-trainable params: 0
+_________________________________________________________________
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model<span style="color:#f92672">.</span>compile(loss <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;sparse_categorical_crossentropy&#39;</span>, optimizer <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Adam&#39;</span>, metrics <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;acc&#39;</span>])
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">history <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit(train_generator,validation_data <span style="color:#f92672">=</span> test_generator, epochs <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>,callbacks <span style="color:#f92672">=</span> [callbacks], batch_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">128</span>)
+</code></pre></div><pre><code>Epoch 1/20
+110/110 [==============================] - 35s 315ms/step - loss: 1.1974 - acc: 0.5186 - val_loss: 1.0111 - val_acc: 0.6160
+Epoch 2/20
+110/110 [==============================] - 30s 272ms/step - loss: 0.8693 - acc: 0.6699 - val_loss: 0.8058 - val_acc: 0.6900
+Epoch 3/20
+110/110 [==============================] - 29s 265ms/step - loss: 0.7290 - acc: 0.7280 - val_loss: 0.7573 - val_acc: 0.7153
+Epoch 4/20
+110/110 [==============================] - 30s 275ms/step - loss: 0.6485 - acc: 0.7634 - val_loss: 0.6422 - val_acc: 0.7553
+Epoch 5/20
+110/110 [==============================] - 28s 257ms/step - loss: 0.5823 - acc: 0.7911 - val_loss: 0.5794 - val_acc: 0.7937
+Epoch 6/20
+110/110 [==============================] - 29s 268ms/step - loss: 0.5351 - acc: 0.8071 - val_loss: 0.5537 - val_acc: 0.8057
+Epoch 7/20
+110/110 [==============================] - 28s 259ms/step - loss: 0.5152 - acc: 0.8100 - val_loss: 0.5237 - val_acc: 0.8127
+Epoch 8/20
+110/110 [==============================] - 30s 269ms/step - loss: 0.4737 - acc: 0.8287 - val_loss: 0.4953 - val_acc: 0.8217
+Epoch 9/20
+110/110 [==============================] - 29s 267ms/step - loss: 0.4361 - acc: 0.8421 - val_loss: 0.5356 - val_acc: 0.8133
+Epoch 10/20
+110/110 [==============================] - 30s 274ms/step - loss: 0.4354 - acc: 0.8404 - val_loss: 0.6009 - val_acc: 0.7787
+Epoch 11/20
+110/110 [==============================] - 29s 265ms/step - loss: 0.4193 - acc: 0.8487 - val_loss: 0.5276 - val_acc: 0.8107
+Epoch 12/20
+110/110 [==============================] - ETA: 0s - loss: 0.3948 - acc: 0.8573
+Reached 85% accuracy so cancelling training!
+110/110 [==============================] - 30s 276ms/step - loss: 0.3948 - acc: 0.8573 - val_loss: 0.5287 - val_acc: 0.8037
+</code></pre>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">score <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>DataFrame(history<span style="color:#f92672">.</span>history)
+
+_, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,figsize <span style="color:#f92672">=</span> (<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">6</span>))
+score[[<span style="color:#e6db74">&#39;acc&#39;</span>,<span style="color:#e6db74">&#39;val_acc&#39;</span>]]<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax[<span style="color:#ae81ff">0</span>])
+score[[<span style="color:#e6db74">&#39;loss&#39;</span>,<span style="color:#e6db74">&#39;val_loss&#39;</span>]]<span style="color:#f92672">.</span>plot(ax<span style="color:#f92672">=</span>ax[<span style="color:#ae81ff">1</span>])
+ax[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set(xlabel <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;epochs&#39;</span>,ylabel <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;accuracy&#39;</span>,title <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;acc &amp; valid</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s acc&#39;</span>)
+ax[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>set(xlabel <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;epochs&#39;</span>,ylabel <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;loss&#39;</span>,title <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;loss &amp; valid</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">s loss&#39;</span>)
+</code></pre></div><pre><code>[Text(0, 0.5, 'loss'),
+ Text(0.5, 0, 'epochs'),
+ Text(0.5, 1.0, &quot;loss &amp; valid's loss&quot;)]
+</code></pre>
+<p><img src="https://example.com/post/cnn-notebook_commited_files/cnn-notebook_commited_19_1.png" alt="png"></p>
+<h1 id="import-images-from-pred-directory">Import images from pred directory</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">images_test, labels_test <span style="color:#f92672">=</span> get_images(<span style="color:#e6db74">&#39;../input/intel-image-classification/seg_test/seg_test/&#39;</span>) <span style="color:#75715e">#Extract the training images from the folders.</span>
+
+images_test <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(images_test) <span style="color:#75715e">#converting the list of images to numpy array.</span>
+labels_test <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(labels_test)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_predict_with_labels</span>():
+    r <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(len(images_test))
+    result <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>predict(np<span style="color:#f92672">.</span>expand_dims(images_test[r],axis <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>))<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">6</span>)
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Predicted : &#39;</span>,get_classlabel(np<span style="color:#f92672">.</span>argmax(result)))
+    <span style="color:#66d9ef">if</span> get_classlabel(np<span style="color:#f92672">.</span>argmax(result)) <span style="color:#f92672">==</span> get_classlabel(labels_test[r]):
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Prediction is accurate!&#39;</span>)
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Prediction is wrong! </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> Correct prediction is {}&#39;</span><span style="color:#f92672">.</span>format(get_classlabel(labels_test[r])))
+
+
+    fig,ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,figsize <span style="color:#f92672">=</span> (<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">6</span>))
+    ax[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>imshow(images_test[r])
+    ax[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+
+    ax[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>bar(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">6</span>), result)
+    plt<span style="color:#f92672">.</span>xticks(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">6</span>),[<span style="color:#e6db74">&#39;buildings&#39;</span>,<span style="color:#e6db74">&#39;forest&#39;</span>,<span style="color:#e6db74">&#39;glacier&#39;</span>,<span style="color:#e6db74">&#39;mountain&#39;</span>,<span style="color:#e6db74">&#39;sea&#39;</span>,<span style="color:#e6db74">&#39;street&#39;</span>], rotation <span style="color:#f92672">=</span> <span style="color:#ae81ff">45</span>)
+    plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Probability of each class&#39;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">random_predict_with_labels()
+</code></pre></div><pre><code>Predicted :  glacier
+Prediction is accurate!
+</code></pre>
+<p><img src="https://example.com/post/cnn-notebook_commited_files/cnn-notebook_commited_23_1.png" alt="png"></p>
+<h1 id="applying-the-model-to-predict-on-preds-sets">Applying the model to predict on Pred&rsquo;s sets</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pred_image</span>(directory):
+    Images <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> image_file <span style="color:#f92672">in</span> os<span style="color:#f92672">.</span>listdir(directory): <span style="color:#75715e">#Extracting the file name of the image from Class Label folder</span>
+            image <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(directory<span style="color:#f92672">+</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#39;/&#39;</span><span style="color:#f92672">+</span>image_file) <span style="color:#75715e">#Reading the image (OpenCV)</span>
+            image <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>resize(image,(<span style="color:#ae81ff">150</span>,<span style="color:#ae81ff">150</span>)) <span style="color:#75715e">#Resize the image, Some images are different sizes. (Resizing is very Important)</span>
+            Images<span style="color:#f92672">.</span>append(image)
+
+    <span style="color:#66d9ef">return</span> Images
+
+images_pred <span style="color:#f92672">=</span> pred_image(<span style="color:#e6db74">&#34;../input/intel-image-classification/seg_pred/seg_pred&#34;</span>)
+
+images_pred <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(images_pred)
+
+<span style="color:#66d9ef">print</span>(images_pred<span style="color:#f92672">.</span>shape)
+
+images_pred <span style="color:#f92672">=</span> images_pred <span style="color:#f92672">/</span> <span style="color:#ae81ff">255.0</span> <span style="color:#75715e"># normalize the pixels to value between [0,1]</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">random_predict</span>():
+    r <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(len(images_pred))
+    result <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>predict(np<span style="color:#f92672">.</span>expand_dims(images_pred[r],axis <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>))<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">6</span>)
+    <span style="color:#66d9ef">print</span>(get_classlabel(np<span style="color:#f92672">.</span>argmax(result)))
+
+
+    fig,ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,figsize <span style="color:#f92672">=</span> (<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">6</span>))
+    ax[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>imshow(images_pred[r])
+    ax[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+
+    ax[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>bar(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">6</span>), result)
+    plt<span style="color:#f92672">.</span>xticks(np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">6</span>),[<span style="color:#e6db74">&#39;buildings&#39;</span>,<span style="color:#e6db74">&#39;forest&#39;</span>,<span style="color:#e6db74">&#39;glacier&#39;</span>,<span style="color:#e6db74">&#39;mountain&#39;</span>,<span style="color:#e6db74">&#39;sea&#39;</span>,<span style="color:#e6db74">&#39;street&#39;</span>], rotation <span style="color:#f92672">=</span> <span style="color:#ae81ff">45</span>)
+    plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Probability of each class&#39;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">random_predict()
+</code></pre></div><pre><code>sea
+</code></pre>
+<p><img src="https://example.com/post/cnn-notebook_commited_files/cnn-notebook_commited_27_1.png" alt="png"></p>
+<ul class="pa0">
+  
+   <li class="list">
+     <a href="https://example.com/tags/cnn" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">CNN</a>
+   </li>
+  
+   <li class="list">
+     <a href="https://example.com/tags/deep-learning" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">Deep Learning</a>
+   </li>
+  
+   <li class="list">
+     <a href="https://example.com/tags/keras" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">keras</a>
+   </li>
+  
+   <li class="list">
+     <a href="https://example.com/tags/tensorflow" class="link f5 grow no-underline br-pill ba ph3 pv2 mb2 dib black sans-serif">tensorflow</a>
+   </li>
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://example.com" >
+    &copy;  Home 2020 
+  </a>
+    <div>
+
+
+
+
+<a href="https://twitter.com/GoHugoIO" target="_blank" class="link-transition twitter link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel="noopener" aria-label="follow on Twitter——Opens in a new window">
+  <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
+
+<span class="new-window"><svg  height="8px"  style="enable-background:new 0 0 1000 1000;" version="1.1" viewBox="0 0 1000 1000" width="8px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<path d="M598 128h298v298h-86v-152l-418 418-60-60 418-418h-152v-86zM810 810v-298h86v298c0 46-40 86-86 86h-596c-48 0-86-40-86-86v-596c0-46 38-86 86-86h298v86h-298v596h596z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
+</svg>
+</span></a>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+  </div>
+</footer>
+
+    
+
+  <script src="https://example.com/dist/js/app.3fc0f988d21662902933.js"></script>
+
+
+  </body>
+</html>

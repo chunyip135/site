@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CNN on Home</title>
-    <link>https://example.com/tags/cnn/</link>
+    <link>https://chunyip135.github.io/site/tags/cnn/</link>
     <description>Recent content in CNN on Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://example.com/tags/cnn/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://chunyip135.github.io/site/tags/cnn/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Image classification using CNN</title>
-      <link>https://example.com/post/cnn-notebook_commited/</link>
+      <link>https://chunyip135.github.io/site/post/cnn-notebook_commited/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://example.com/post/cnn-notebook_commited/</guid>
+      <guid>https://chunyip135.github.io/site/post/cnn-notebook_commited/</guid>
       <description>Descriptions This is a project that uses Convolutional Neural Nets to classified images between classes of forest, glacier, sea, street and buildings. The libraries that are used are such as tensorflow, keras, matplotlib and numpy. The datasets is open-source and can be found on Kaggle.
  visualize images visualize covnets model deploy to web  import tensorflow as tf from tensorflow import keras import cv2 import os from tensorflow.keras.preprocessing.image import ImageDataGenerator import matplotlib.</description>
     </item>
